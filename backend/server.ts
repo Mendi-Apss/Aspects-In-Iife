@@ -1,11 +1,10 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
 const app: Express = express();
-const PORT = 8080;
+const PORT = 2121;
+
+const loginRoute = require('./routes/login');
+
+app.use('/login', loginRoute);
 
 
-app.get('/', (req, res) => {
-
-});
-
-
-app.listen(PORT, () => console.log(`listen to port ${PORT}`));
+app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
