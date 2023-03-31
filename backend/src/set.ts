@@ -1,9 +1,14 @@
-import { all, compose, equals, length, pluck, times, uniq } from 'ramda';
+import { all, compose, equals, length, map, pluck, uniq } from 'ramda';
 
 export type Shape = 'oval' | 'diamond' | 'squiggle';
 export type Color = 'red' | 'green' | 'purple';
 export type Number = 1 | 2 | 3;
 export type Filling = 'solid' | 'striped' | 'empty';
+
+const SHAPE: Shape[] = ['oval', 'diamond', 'squiggle'];
+const COLOR: Color[] = ['red', 'green', 'purple'];
+const NUMBER: Number[] = [1, 2, 3];
+const FILLING: Filling[] = ['solid', 'striped', 'empty'];
 
 export interface Card {
     shape: Shape;
@@ -26,23 +31,27 @@ export const isSet = (cards: Card[]): boolean => {
     return length(cards) === 3 ? all(compose(equals(true), hasEqualOrDifferentValues), properties) : false;
 };
 
+const createDeck = (): Card[] => {
 
-export const createCard = (): Card => {
+    const generateCards = ([shape, color, number, filling]: [Shape, Color, Number, Filling]): Card =>
+    ({
+        shape,
+        color,
+        number,
+        filling,
+    });
 
-    const shape: Shape[] = ['oval', 'diamond', 'squiggle'];
-    const color: Color[] = ['red', 'green', 'purple'];
-    const number: Number[] = [1, 2, 3];
-    const filling: Filling[] = ['solid', 'striped', 'empty'];
-    const randomCard = <T>(list: T[]): T => list[Math.floor(Math.random() * list.length)];
-
-    return {
-        shape: randomCard(shape),
-        color: randomCard(color),
-        number: randomCard(number),
-        filling: randomCard(filling)
-    };
+    const allCombinations: [Shape, Color, Number, Filling][] = [];
+    SHAPE.forEach((shape) => {
+        COLOR.forEach((color) => {
+            NUMBER.forEach((number) => {
+                FILLING.forEach((filling) => {
+                    allCombinations.push([shape, color, number, filling]);
+                });
+            });
+        });
+    });
+    return uniq(map(generateCards, allCombinations));
 };
 
-export const cardsDeck = (numberOfCards: number = 3): Card[] => {
-    return times(createCard, numberOfCards);
-};
+console.log(createDeck().length);
