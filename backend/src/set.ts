@@ -31,10 +31,10 @@ export const isSet = (cards: Card[]): boolean => {
     return length(cards) === 3 ? all(compose(equals(true), hasEqualOrDifferentValues), properties) : false;
 };
 
-const createDeck = (): Card[] => {
+export const createDeck = (): Card[] => {
 
     const generateCards = ([shape, color, number, filling]: [Shape, Color, Number, Filling]): Card =>
-    ({
+     ({
         shape,
         color,
         number,
@@ -53,5 +53,3 @@ const createDeck = (): Card[] => {
     });
     return uniq(map(generateCards, allCombinations));
 };
-
-console.log(createDeck().length);
