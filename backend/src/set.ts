@@ -28,13 +28,13 @@ export const isSet = (cards: Card[]): boolean => {
         return length(uniqValues) === 1 || length(uniqValues) === 3;
     };
     const properties = [shapeValues, colorValues, numberValues, fillingValues];
-    return length(cards) === 3 ? all(compose(equals(true), hasEqualOrDifferentValues), properties) : false;
+    return all(compose(equals(true), hasEqualOrDifferentValues), properties);
 };
 
 export const createDeck = (): Card[] => {
 
     const generateCards = ([shape, color, number, filling]: [Shape, Color, Number, Filling]): Card =>
-     ({
+    ({
         shape,
         color,
         number,
@@ -53,3 +53,10 @@ export const createDeck = (): Card[] => {
     });
     return uniq(map(generateCards, allCombinations));
 };
+
+const deck = createDeck();
+
+const randomList = Math.floor(Math.random() * 80);
+console.log(randomList);
+const one = deck[randomList];
+console.log(one);
