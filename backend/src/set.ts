@@ -1,4 +1,4 @@
-import { all, compose, equals, length, map, pluck, uniq } from 'ramda';
+import { all, compose, equals, length, map, pluck, times, uniq } from 'ramda';
 
 export type Shape = 'oval' | 'diamond' | 'squiggle';
 export type Color = 'red' | 'green' | 'purple';
@@ -33,7 +33,7 @@ export const isSet = (cards: Card[]): boolean => {
 
 export const createDeck = (): Card[] => {
 
-    const generateCards = ([shape, color, number, filling]: [Shape, Color, Number, Filling]): Card =>
+    const generateCard = ([shape, color, number, filling]: [Shape, Color, Number, Filling]): Card =>
     ({
         shape,
         color,
@@ -51,12 +51,15 @@ export const createDeck = (): Card[] => {
             });
         });
     });
-    return uniq(map(generateCards, allCombinations));
+    return map(generateCard, allCombinations);
 };
 
-const deck = createDeck();
-
-const randomList = Math.floor(Math.random() * 80);
-console.log(randomList);
-const one = deck[randomList];
-console.log(one);
+const generateBoardGame = (): Card[] => {
+    const deck = createDeck();
+    const randomIndex = times(() => Math.floor(Math.random() * deck.length), 12);
+    const cards = randomIndex.map(i => deck[i]);
+    if (uniq(randomIndex).length < 12 && isSet(cards)) {
+        generateBoardGame();
+    }
+    return cards;
+};
