@@ -54,12 +54,12 @@ export const createDeck = (): Card[] => {
     return map(generateCard, allCombinations);
 };
 
-const generateBoardGame = (): Card[] => {
+const drawCards = (numberOfCards: number = 12): Card[] => {
     const deck = createDeck();
-    const randomIndex = times(() => Math.floor(Math.random() * deck.length), 12);
+    const randomIndex = times(() => Math.floor(Math.random() * deck.length), numberOfCards);
     const cards = randomIndex.map(i => deck[i]);
     if (uniq(randomIndex).length < 12 && isSet(cards)) {
-        generateBoardGame();
+        drawCards();
     }
     return cards;
 };
