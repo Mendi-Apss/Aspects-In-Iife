@@ -1,0 +1,16 @@
+.card {
+    height: 200px;
+    width: 300px;
+    background-color: rgb(196, 196, 196);
+    border: 1px solid gray;
+    border-radius: 15px;
+    transition: 200ms ease-in;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.clicked {
+    transform: scale(0.9);
+}

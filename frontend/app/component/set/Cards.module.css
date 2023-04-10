@@ -1,0 +1,12 @@
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid {
+    display: grid;
+    grid-template: auto auto / repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
