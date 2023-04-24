@@ -1,13 +1,12 @@
 import express from 'express';
-import StatusCodes from 'http-status-codes';
+import 'jsonwebtoken';
+import { createToken } from '../middleware/auth';
 
 const router = express.Router();
 
 router.get('/', (request, response) => {
-    response
-        .status(StatusCodes.OK)
-        .send('get request succeeded')
-
+    response.cookie('token', createToken('token'), { secure: false });
+    response.send({ status: 200, token: request.cookies.token });
 });
 
 router.post('/', (request, response) => {
